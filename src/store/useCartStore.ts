@@ -1,5 +1,5 @@
 
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/supabase/supabaseClient";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

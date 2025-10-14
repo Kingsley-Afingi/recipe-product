@@ -1,13 +1,12 @@
 
 "use client";
 
-import { createClient } from "@/authlib/client";
+import { useGetCurrentUser } from "@/hooks/useGetUser";
 import { useCartStore } from "@/store/useCartStore";
-// import { createClient } from "@/supabase/client"; // 👈 Import your Supabase client
-import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
-import { FaRegHeart } from "react-icons/fa";
+import { FaCartPlus, FaRegHeart } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { toast } from "sonner";
 
 interface RecipeCardsProps {
   recipe: any;
@@ -25,80 +24,71 @@ export default function RecipeCards({
   onView,
 }: RecipeCardsProps) {
   const addToCart = useCartStore((state) => state.addToCart);
-  const [userId, setUserId] = useState<string | null>(null);
 
-  // 👇 Fetch logged-in user ID from Supabase
-  useEffect(() => {
-    const fetchUser = async () => {
-      const supabase = createClient();
-      const { data, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error("Error fetching user:", error.message);
-        return;
-      }
-
-      if (data?.user) {
-        setUserId(data.user.id);
-      }
-    };
-
-    fetchUser();
-  }, []);
+  // ✅ Use React Query to get the current user
+  const { data:currentUser, isLoading, isError, error } = useGetCurrentUser();
 
   const handleAddToCart = () => {
-    if (!userId) {
-      alert("Please log in to add items to your cart.");
+    if (isLoading) {
+      toast.info("Checking your login status...");
       return;
     }
 
-    // 👇 Now correctly pass both the item and userId
+    if (isError || !currentUser) {
+      toast.error("Please log in to add items to your cart.");
+      return;
+    }
+
+    // ✅ Add to cart for the authenticated user
     addToCart(
       {
-        recipe_id: recipe.id, // 👈 make sure recipe.id is a UUID
+        recipe_id: recipe.id,
         name: recipe.name,
         price: Number(recipe.price),
-        image_url: recipe.image, // 👈 mapped from recipe.image
+        image_url: recipe.image,
         quantity: 1,
       },
-      userId
+      currentUser.id // ✅ pulled directly from React Query hook
     );
+
+    toast.success(`${recipe.name} added to your cart!`);
   };
 
   return (
     <div className="w-full p-2 shadow-[#3232470D] border border-slate-300 rounded-lg shadow hover:shadow-blue-900 transition-all ease-out group relative">
-      <div className="relative">
-        <div className="absolute w-full">
-          {isAdmin && (
-            <div className="flex items-center justify-between">
-              {onEdit && (
-                <button
-                  className="text-3xl text-blue-500 cursor-pointer"
-                  onClick={() => onEdit(recipe)}
-                >
-                  <CiEdit />
-                </button>
-              )}
-              {onDelete && (
-                <button
-                  className="text-3xl text-red-500 cursor-pointer"
-                  onClick={() => onDelete(recipe.id)}
-                >
-                  <MdDeleteForever />
-                </button>
-              )}
-            </div>
-          )}
-        </div>
-
-        <img
-          src={recipe.image}
-          alt={recipe.name}
-          className="w-full h-[150px] object-cover rounded cursor-pointer"
-          onClick={() => onView?.(recipe)}
-        />
+      {/* Admin Buttons */}
+      <div className="absolute w-full">
+        {isAdmin && (
+          <div className="flex items-center justify-between">
+            {onEdit && (
+              <button
+                className="text-3xl text-blue-500 cursor-pointer"
+                onClick={() => onEdit(recipe)}
+              >
+                <CiEdit />
+              </button>
+            )}
+            {onDelete && (
+              <button
+                className="text-3xl text-red-500 cursor-pointer"
+                onClick={() => onDelete(recipe.id)}
+              >
+                <MdDeleteForever />
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
+      {/* Image */}
+      <img
+        src={recipe.image}
+        alt={recipe.name}
+        className="w-full h-[150px] object-cover rounded cursor-pointer"
+        onClick={() => onView?.(recipe)}
+      />
+
+      {/* Recipe Info */}
       <div className="flex justify-between items-center my-1">
         <small className="text-[#ADADAD]">Dairy Free</small>
         <small className="text-[#ADADAD]">
@@ -121,6 +111,7 @@ export default function RecipeCards({
           : ""}
       </p>
 
+      {/* Rating & Pretime */}
       <div className="flex justify-between mt-2">
         <p>Review-Count</p>
         <p className="flex gap-2 items-center">
@@ -131,7 +122,7 @@ export default function RecipeCards({
 
       <div className="flex justify-between mt-1">
         <h3 className="text-red-500">
-          <span className="text-gray-600 font-semibold">Pretime:</span>{" "}
+          <span className="text-gray-600 font-semibold">Prep time:</span>{" "}
           {recipe.prepTimeMinutes}
         </h3>
 
@@ -140,16 +131,17 @@ export default function RecipeCards({
             <FaRegHeart />
           </span>
 
-          {/* 👇 Updated to use handleAddToCart */}
+          {/* ✅ Now uses React Query hook for user check */}
           <button
             onClick={handleAddToCart}
-            className="bg-green-600 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity py-2 px-4 cursor-pointer duration-300"
+            className="bg-green-500 px-1 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity md:py-2 md:px-2  cursor-pointer duration-300"
           >
-            Add to cart
+             <FaCartPlus className="text-3xl"/>
           </button>
         </div>
       </div>
     </div>
   );
 }
+
 

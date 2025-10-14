@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
-// import { createClient } from "@/supabase/client";
 // import Image from "next/image";
 import { createClient } from "@/authlib/client";
 
@@ -46,10 +45,10 @@ export default function CartPage() {
   return (
     <div className="max-w-3xl mx-auto py-10 px-3">
       {/* Cart Total */}
-          <div className="mt-6 flex justify-between border-t py-3">
-            <h2 className="text-xl font-bold">Total: ${total.toFixed(2)}</h2>
-             <h1 className="text-2xl font-bold  text-center">🛒 Your Cart</h1>
-            <button className="bg-green-600 px-2 py-1 rounded-md text-white cursor-pointer">CheckOut</button>
+          <div className="mt-6 flex justify-between border-t gap-1 py-3">
+            <h2 className="md:text-xl font-bold">Total: ${total.toFixed(2)}</h2>
+             <h1 className="md:text-2xl font-bold  text-center">🛒 Your Cart</h1>
+            <button className="bg-green-600 md:px-2 px-[6px] py-1 rounded-md text-white cursor-pointer">CheckOut</button>
           </div>
 
       {cart.length === 0 ? (

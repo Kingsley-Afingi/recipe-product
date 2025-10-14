@@ -21,26 +21,16 @@ const CustomSearch = () => {
     }
   }, [value, updateQueryParams]);
 
-  // const handleClose = () => {
-  //   setText("");
-  //   return updateQueryParams({
-  //     q: "",
-  //   });
-  // };
   return (
-    <div className="md:w-full max-w-md gap-10 relative ">
-      <BiSearch className="absolute right-4 top-1/2 -translate-1/2  text-gray-400 text-2xl " />
+    <div className="md:w-full max-w-[300px] gap-10 relative ">
+      <BiSearch className="absolute right-1 top-1/2 -translate-1/2  text-gray-400 text-2xl " />
       <input
         type="text"
         onChange={(e) => setText(e.target.value)}
         value={text}
-        className="border-1 px-7 py-1 rounded-md w-full placeholder:p-2"
+        className="border-1 px-2 py-1 rounded-md w-full placeholder:p-1"
         placeholder="search recipes"
       />
-      {/* <IoIosCloseCircle
-        className="absolute right-0 top-1/2 -translate-1/2  text-gray-400 text-2xl "
-        onClick={handleClose}
-      /> */}
     </div>
   );
 };

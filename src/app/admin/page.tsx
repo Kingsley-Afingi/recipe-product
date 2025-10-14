@@ -18,6 +18,11 @@ export default function AdminDashboard() {
           </Link>
         </li>
         <li>
+          <Link href="/admin/live-admin-chat" className="text-blue-600 underline">
+            Admin Chat
+          </Link>
+        </li>
+        <li>
           <button className="text-gray-600" disabled>
             (Users & Orders coming later)
           </button>

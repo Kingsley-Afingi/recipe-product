@@ -30,7 +30,7 @@ export default function RecipeList() {
         <div className="mb-4 flex items-center justify-between">
           <CustomSearch />
           {/* this button is for displaying the total mumber of recipes */}
-          <button className="px-2 py-1 bg-gray-700 rounded-lg text-white ">{recipes?.length || 0} recipe{recipes?.length===1 ? "" : "s"} found</button>
+          <button className="px-2 py-1 md:flex hidden bg-gray-700 rounded-lg text-white ">{recipes?.length || 0} recipe{recipes?.length===1 ? "" : "s"} found</button>
         </div>
         <section className="grid md:grid-cols-4 grid-cols-2 gap-3">
             {recipes && recipes.length > 0? (

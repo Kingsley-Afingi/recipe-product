@@ -46,7 +46,7 @@ const Register = () => {
     }
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}
-    className="bg-black lg:w-[40%] w-full mx-auto p-4 rounded-xl space-y-4 "
+    className="bg-gray-300 lg:w-[40%] w-full mx-auto p-4 rounded-xl space-y-4 "
     >
     <CustomInput
     label="Name"
@@ -83,12 +83,13 @@ const Register = () => {
         </p>
     )}
 
-    {mutation.data &&(
+    {/* {mutation.data &&(
         <p className="text-green-600">data saved successfully</p>
-    )}
+    )} */}
+    
     <p className="text-white">
         Already have Account ? {""}
-        <Link href="/login">Login</Link>
+        <Link href="/login" className="font-bold">Login</Link>
     </p>
     </form>
   )

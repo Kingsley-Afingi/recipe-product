@@ -1,20 +1,19 @@
 "use client";
-import React from "react";
-import { useGetUser } from "@/hooks/useGetUsers";
+
+import { useGetAllUsers } from "@/hooks/useGetUser";
 
 export default function UserProfile() {
-  const { user} = useGetUser();
 
- 
+ const { data: allUsers } = useGetAllUsers();
   return (
-    <div>
-      {user ? (
-        <p>Hi, {user?.user_metadata?.name || user.email} </p>
-      ) : (
-        <p>Create Account</p>
-      )}
+      <div>
+      <h2>👥 All Users</h2>
+      {allUsers?.map((u: any) => (
+        <div key={u.id} className="flex gap-50 px-2 py-2 border">
+          <div>{u.name} </div>
+          <div> {u.email}</div>
+        </div>
+      ))}
     </div>
   );
 }
-
-
