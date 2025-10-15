@@ -1,7 +1,8 @@
 
 import Banner from "@/components/layout/Banner"
+import SkeletonLoader from "@/components/SkeletonLoader"
 import RecipeList from "@/recipes/RecipeList"
-// import Register from "./register/page"
+import { Suspense } from "react"
 
 
 
@@ -10,7 +11,10 @@ const page = () => {
     <div className="">
      <Banner/>
      {/* <Register/>  */}
-     <RecipeList/>
+     {/* <RecipeList/> */}
+      <Suspense fallback={<SkeletonLoader/>}>
+      <RecipeList />
+    </Suspense>
     </div>
   )
 }

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useUpdateQuery } from "@/hooks/useUpdateQuery";
 import { useDebounce } from "use-debounce";
-import { IoIosCloseCircle } from "react-icons/io";
 import { useSearchParams } from "next/navigation";
 
 const CustomSearch = () => {
