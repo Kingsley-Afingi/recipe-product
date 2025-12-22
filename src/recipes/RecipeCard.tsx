@@ -134,7 +134,7 @@ export default function RecipeCards({
           {/* ✅ Now uses React Query hook for user check */}
           <button
             onClick={handleAddToCart}
-            className="bg-green-500 px-1 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity md:py-2 md:px-2  cursor-pointer duration-300"
+            className="bg-green-500 px-1 text-white rounded opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity md:py-2 md:px-2  cursor-pointer duration-300"
           >
              <FaCartPlus className="text-3xl"/>
           </button>

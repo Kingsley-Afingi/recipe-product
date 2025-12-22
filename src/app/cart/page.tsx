@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/store/useCartStore";
 // import Image from "next/image";
 import { createClient } from "@/authlib/client";
+import Link from "next/link";
 
 export default function CartPage() {
   const {
@@ -48,7 +49,9 @@ export default function CartPage() {
           <div className="mt-6 flex justify-between border-t gap-1 py-3">
             <h2 className="md:text-xl font-bold">Total: ${total.toFixed(2)}</h2>
              <h1 className="md:text-2xl font-bold  text-center">🛒 Your Cart</h1>
+             <Link href="/checkout">
             <button className="bg-green-600 md:px-2 px-[6px] py-1 rounded-md text-white cursor-pointer">CheckOut</button>
+             </Link>
           </div>
 
       {cart.length === 0 ? (
